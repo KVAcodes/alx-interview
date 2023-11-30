@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """ This module contains the solution to the pascal triangle
 interview question.
 """

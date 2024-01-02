@@ -1,28 +1,25 @@
 #!/usr/bin/python3
-"""Solution to the Minimum Operation Interview Question."""
-
-
-def findHF(n):
-    """Finds the highest factor of a number.
-    """
-    highestFactor = 1
-    num = 2
-    while num <= n / 2:
-        if n % num == 0:
-            highestFactor = num
-        num += 1
-    return highestFactor
+""" Module for 0-minoperations"""
 
 
 def minOperations(n):
-    """This method calculates the fewest number of operations needed to
-    result in exactly n H characters.
     """
-    ops = 0
-    if n <= 1:
-        return ops
-    highestFactor = findHF(n)
-    if highestFactor == 1:
-        return n
-    ret = minOperations(highestFactor)
-    return int(ret + (n / highestFactor))
+    minOperations
+    Gets fewest # of operations needed to result in exactly n H characters
+    """
+    # all outputs should be at least 2 char: (min, Copy All => Paste)
+    if (n < 2):
+        return 0
+    ops, root = 0, 2
+    while root <= n:
+        # if n evenly divides by root
+        if n % root == 0:
+            # total even-divisions by root = total operations
+            ops += root
+            # set n to the remainder
+            n = n / root
+            # reduce root to find remaining smaller vals that evenly-divide n
+            root -= 1
+        # increment root until it evenly-divides n
+        root += 1
+    return ops

@@ -1,54 +1,32 @@
 #!/usr/bin/python3
-
+"""This module contains the solution to the log_parsing interview.
+"""
 import sys
 
-
-def print_msg(dict_sc, total_file_size):
-    """
-    Method to print
-    Args:
-        dict_sc: dict of status codes
-        total_file_size: total of the file
-    Returns:
-        Nothing
-    """
-
-    print("File size: {}".format(total_file_size))
-    for key, val in sorted(dict_sc.items()):
-        if val != 0:
-            print("{}: {}".format(key, val))
-
-
-total_file_size = 0
-code = 0
-counter = 0
-dict_sc = {"200": 0,
-           "301": 0,
-           "400": 0,
-           "401": 0,
-           "403": 0,
-           "404": 0,
-           "405": 0,
-           "500": 0}
-
-try:
-    for line in sys.stdin:
-        parsed_line = line.split()  # ✄ trimming
-        parsed_line = parsed_line[::-1]  # inverting
-
-        if len(parsed_line) > 2:
-            counter += 1
-
-            if counter <= 10:
-                total_file_size += int(parsed_line[0])  # file size
-                code = parsed_line[1]  # status code
-
-                if (code in dict_sc.keys()):
-                    dict_sc[code] += 1
-
-            if (counter == 10):
-                print_msg(dict_sc, total_file_size)
-                counter = 0
-
-finally:
-    print_msg(dict_sc, total_file_size)
+if __name__ == '__main__':
+    try:
+        count = 0
+        store = {
+            'File size': 0
+        }
+        while True:
+            for line in sys.stdin:
+                if count == 10:
+                    count = 0
+                    line_to_print = ''
+                    for key, value in store.items():
+                        line_to_print += key + ': ' + str(value) + '\n'
+                    print(line_to_print, end="")
+                # strip line
+                parsed = line.split()
+                store['File size'] += int(parsed[-1])
+                if parsed[-2] in store:
+                    store[parsed[-2]] += 1
+                else:
+                    store[parsed[-2]] = 1
+                count += 1
+    except KeyboardInterrupt:
+        line_to_print = ''
+        for key, value in store.items():
+            line_to_print += key + ': ' + str(value) + '\n'
+        print(line_to_print, end="")

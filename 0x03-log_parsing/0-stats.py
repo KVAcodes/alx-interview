@@ -14,7 +14,11 @@ if __name__ == '__main__':
                 if count == 10:
                     count = 0
                     line_to_print = ''
-                    for key, value in sorted(store.items()):
+                    sorted_dict = list(sorted(store.items()))
+                    line_to_print += (
+                            'File size' + ': ' + str(sorted_dict[-1][1]) + '\n'
+                            )
+                    for key, value in sorted_dict[:-1]:
                         line_to_print += key + ': ' + str(value) + '\n'
                     print(line_to_print, end="")
                 # strip line
@@ -27,6 +31,8 @@ if __name__ == '__main__':
                 count += 1
     except KeyboardInterrupt:
         line_to_print = ''
-        for key, value in sorted(store.items()):
+        sorted_dict = list(sorted(store.items()))
+        line_to_print += 'File size' + ': ' + str(sorted_dict[-1][1]) + '\n'
+        for key, value in sorted_dict[:-1]:
             line_to_print += key + ': ' + str(value) + '\n'
         print(line_to_print, end="")

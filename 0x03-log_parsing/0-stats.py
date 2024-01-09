@@ -14,7 +14,7 @@ if __name__ == '__main__':
                 if count == 10:
                     count = 0
                     line_to_print = ''
-                    for key, value in store.items():
+                    for key, value in sorted(store.items()):
                         line_to_print += key + ': ' + str(value) + '\n'
                     print(line_to_print, end="")
                 # strip line
@@ -27,6 +27,6 @@ if __name__ == '__main__':
                 count += 1
     except KeyboardInterrupt:
         line_to_print = ''
-        for key, value in store.items():
+        for key, value in sorted(store.items()):
             line_to_print += key + ': ' + str(value) + '\n'
         print(line_to_print, end="")

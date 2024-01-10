@@ -3,6 +3,18 @@
 """
 import sys
 
+
+def print_message(store):
+    line_to_print = ''
+    sorted_dict = list(sorted(store.items()))
+    line_to_print += (
+        'File size' + ': ' + str(sorted_dict[-1][1]) + '\n'
+        )
+    for key, value in sorted_dict[:-1]:
+        line_to_print += key + ': ' + str(value) + '\n'
+    print(line_to_print, end="")
+
+
 if __name__ == '__main__':
     try:
         count = 0
@@ -12,14 +24,7 @@ if __name__ == '__main__':
         for line in sys.stdin:
             if count == 10:
                 count = 0
-                line_to_print = ''
-                sorted_dict = list(sorted(store.items()))
-                line_to_print += (
-                        'File size' + ': ' + str(sorted_dict[-1][1]) + '\n'
-                        )
-                for key, value in sorted_dict[:-1]:
-                    line_to_print += key + ': ' + str(value) + '\n'
-                print(line_to_print, end="")
+                print_message(store)
             # strip line
             parsed = line.split()
             store['File size'] += int(parsed[-1])
@@ -28,10 +33,6 @@ if __name__ == '__main__':
             else:
                 store[parsed[-2]] = 1
             count += 1
+        print_message(store)
     except KeyboardInterrupt:
-        line_to_print = ''
-        sorted_dict = list(sorted(store.items()))
-        line_to_print += 'File size' + ': ' + str(sorted_dict[-1][1]) + '\n'
-        for key, value in sorted_dict[:-1]:
-            line_to_print += key + ': ' + str(value) + '\n'
-        print(line_to_print, end="")
+        print_message(store)

@@ -27,11 +27,13 @@ if __name__ == '__main__':
                 print_message(store)
             # strip line
             parsed = line.split()
-            store['File size'] += int(parsed[-1])
-            if parsed[-2] in store:
-                store[parsed[-2]] += 1
-            else:
-                store[parsed[-2]] = 1
+            if len(parsed) >= 2 and parsed[-1].isdigit():
+                store['File size'] += int(parsed[-1])
+                if parsed[-2] in store:
+                    store[parsed[-2]] += 1
+                else:
+                    if parsed[-2].isdigit():
+                        store[parsed[-2]] = 1
             count += 1
         print_message(store)
     except KeyboardInterrupt:

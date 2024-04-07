@@ -1,30 +1,40 @@
 #!/usr/bin/python3
-"""Module contains the solution to the UTF8 Validation problem.
-"""
+""" UTF-8 Validation """
+
 
 def validUTF8(data):
-    """Returns True if the data is a valid UT8-encoding, else returns False.
     """
-    # converts the data list to a list of 8 least significant 
-    # bits of each integer in the list
-    encoding = [bin(integer)[-8:] for integer in data]
-    print(encoding)
-    #Test for Validity.
-    string = 0
-    while string < len(encoding):
-        if encoding[string][0] == '0':
-            string += 1
-            continue
-        elif encoding[string][:2] == '10':
-            return False
+    Method that determines if a given data set represents a valid
+    UTF-8 encoding.
+    """
+    number_bytes = 0
+
+    mask_1 = 1 << 7
+    mask_2 = 1 << 6
+
+    for i in data:
+
+        mask_byte = 1 << 7
+
+        if number_bytes == 0:
+
+            while mask_byte & i:
+                number_bytes += 1
+                mask_byte = mask_byte >> 1
+
+            if number_bytes == 0:
+                continue
+
+            if number_bytes == 1 or number_bytes > 4:
+                return False
+
         else:
-            idx = 1
-            while encoding[string][idx] != '0':
-                string += 1
-                if string < len(encoding) and encoding[string][:2] == '10':
-                    idx += 1
-                    continue
-                else:
+            if not (i & mask_1 and not (i & mask_2)):
                     return False
-        string += 1
-    return True
+
+        number_bytes -= 1
+
+    if number_bytes == 0:
+        return True
+
+    return False
